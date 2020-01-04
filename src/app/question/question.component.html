@@ -1,0 +1,38 @@
+
+<div *ngIf="data[language] as dataLang">
+  lanuguage: {{ language }}<br />
+  <ng-container *ngIf="setNumber; else showAllSets">
+    <ng-container *ngIf="dataLang[setNumber] as dataSet; else noDataSet">
+      <span class="question-info">set number: </span>{{ setNumber }}<br />
+      set title: {{ dataSet.title }}<br />
+      <ng-container *ngIf="dataSet.questions[questionNumber] as dataQuestion; else showAllQuestions">
+          question number: {{ questionNumber }}<br /><br />
+          question raw json: {{ dataQuestion | json}}<br /><br />
+          question: <div class="question-content" [innerHTML]="dataQuestion.question"></div>
+          <ng-container [ngSwitch]="dataQuestion.type">
+            <ol *ngSwitchCase="'mc'" class="questoin-content">
+              <li *ngFor="let option of dataQuestion.options; index as i" type="a"
+              [ngClass]="{ 'correct-answer': i == dataQuestion.answer }">
+              {{ option }}
+            </li>
+          </ol>
+        </ng-container>
+      </ng-container>
+      <ng-template #showAllQuestions>
+        <br />
+        questions: <br /><br />
+        <a *ngFor="let q of dataSet.questions; index as i" [routerLink]="i">
+          question {{ i }}: {{ q.type }}: {{ q.question }}<br /><br />
+        </a>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+  <ng-template #showAllSets>
+    <a *ngFor="let item of dataLang | keyvalue" [routerLink]="item.key">
+      problem set {{ item.key }}: {{ item.value.title }}
+    </a>
+  </ng-template>
+  <ng-template #noDataSet>
+    data set <ng-container *ngIf="setNumber">{{ setNumber }} </ng-container>doesn't exist
+  </ng-template>
+</div>
