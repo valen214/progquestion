@@ -1,5 +1,5 @@
 
-<ng-container *ngVar="data && (data | async) || {} as data">
+<ng-container *ngIf="data"><ng-container *ngVar="data | async as data">
   <div class="container" *ngIf="data[language] as dataLang; else showAllLang">
     <a [routerLink]="'../'">up one layer</a><br />
     lanuguage: {{ language }}<br />
@@ -9,49 +9,50 @@
         set title: {{ dataSet.title }}<br />
         <ng-container *ngIf="dataSet.questions[questionNumber] as dataQuestion; else showAllQuestions">
           <a *ngIf="0 &lt; +questionNumber"
-              [routerLink]="['../', +questionNumber-1]">previous question</a><br />
-          <a [routerLink]="['../', +questionNumber+1]">next question</a><br />
+          [routerLink]="['../', +questionNumber-1]">previous question</a><br />
+          <a *ngIf="+questionNumber+1 &lt; dataSet.questions.length"
+          [routerLink]="['../', +questionNumber+1]">next question</a><br />
           question number: {{ questionNumber }}<br /><br />
           question: <div class="question-content" [innerHTML]="dataQuestion.question"></div>
           <ng-container [ngSwitch]="dataQuestion.type">
             <ol *ngSwitchCase="'mc'" class="questoin-content">
               <li *ngFor="let option of dataQuestion.options; index as i" type="a"
-                  [ngClass]="{ 'correct-answer': i == dataQuestion.answer }"
+              [ngClass]="{ 'correct-answer': i == dataQuestion.answer }"
                   [innerHTML]="option">
-              </li>
-            </ol>
+                </li>
+              </ol>
             <ng-container *ngSwitchCase="'mcma'">
               <div *ngFor="let option of dataQuestion.options; index as i"
                   class="mcma-option">
-                <mat-checkbox>{{ i }}.&nbsp;
-                  <span
-                      [ngClass]="{'correct-answer': dataQuestion.answer.includes(i)}"
-                      [innerHTML]="option"></span>
-                </mat-checkbox>
+                  <mat-checkbox>{{ i }}.&nbsp;
+                    <span
+                    [ngClass]="{'correct-answer': dataQuestion.answer.includes(i)}"
+                    [innerHTML]="option"></span>
+                  </mat-checkbox>
+                </div>
+              </ng-container>
+              <div *ngSwitchCase="'fill'">
+                fill in the blanks:<br />
+                answer: <span class="correct-answer">{{ dataQuestion.answer }}</span>
               </div>
             </ng-container>
-            <div *ngSwitchCase="'fill'">
-              fill in the blanks:<br />
-              answer: <span class="correct-answer">{{ dataQuestion.answer }}</span>
-            </div>
           </ng-container>
-        </ng-container>
         <ng-template #showAllQuestions>
           <br />
           questions: <br /><br />
           <a *ngFor="let q of dataSet.questions; index as i"
-              [routerLink]="['/question', language, setNumber, i]">
-            question {{ i }}: {{ q.type }}: <span [innerHTML]="q.question"></span><br /><br />
-          </a>
-        </ng-template>
-      </ng-container>
+          [routerLink]="['/question', language, setNumber, i]">
+          question {{ i }}: {{ q.type }}: <span [innerHTML]="q.question"></span><br /><br />
+        </a>
+      </ng-template>
     </ng-container>
-    <ng-template #showAllSets>
-      <a *ngFor="let item of dataLang | keyvalue" [routerLink]="item.key">
-        problem set {{ item.key }}: {{ item.value.title }}
-      </a>
-    </ng-template>
-    <ng-template #noDataSet>
+  </ng-container>
+  <ng-template #showAllSets>
+    <a *ngFor="let item of dataLang | keyvalue" [routerLink]="item.key">
+      problem set {{ item.key }}: {{ item.value.title }}<br />
+    </a>
+  </ng-template>
+  <ng-template #noDataSet>
       data set <ng-container *ngIf="setNumber">{{ setNumber }} </ng-container>doesn't exist
     </ng-template>
   </div>
@@ -61,5 +62,5 @@
       <a [routerLink]="['/question', item.key]">{{ item.key }}</a><br/>
     </ng-container>
   </ng-template>
-
-</ng-container>
+  
+</ng-container></ng-container>

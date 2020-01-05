@@ -6,21 +6,42 @@ let data = {
       questions: [
         {
           type: "mc",
-          question: `Which of the following is the correct package import statement so that <br />
+          question: `Which of the following is the correct package import statement so that the following line <br />
 <pre>
-    File file = new File("a.txt");
+Scanner scanner = new Scanner(System.in);
 </pre>
 can compile without error?`,
           options: [
-            "import java/io/File",
-            "import java.io;",
-            "import java.io.File;",
-            "import io/File"
+            "import java/util/Scanner",
+            "import java.util;",
+            "import java.util.Scanner;",
+            "import util/Scanner",
+            "import java.io.Scanner;",
+            "import java/io/Scanner",
+            "import java.io.scanner"
           ],
           answer: 2
         }, {
+          type: "fill",
+          question: `given <pre>
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class ReadFile {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String line;
+    do{
+      line = scanner.nextLine();
+      ___________________;
+    } while(!line.isEmpty());
+    scanner.close();
+  }
+}</pre>
+what should be filled in '______________' to print whole user input line-by-line (which terminate at empty line)?`,
+          answer: "System.out.println(line);"
+        }, {
           type: "mcma",
-          question: `Which of the following declaration(s) of object <code>readFromConsole</code> that allows you to read from <code>System.in</code>? (given with the correct package import)`,
+          question: `Which of the following declaration(s) of object <code>readFromConsole</code> that allows you to read from <code>System.in</code>? (given with the required correct package import)`,
           options: [
             "BufferedReader readFromConsole = new BufferedReader(new InputStreamReader(System.in));",
             "Scanner readFromConsole = Scanner.readFrom(System.in);",
@@ -30,30 +51,6 @@ can compile without error?`,
             "readFromConsole = Scanner(System.in)"
           ],
           answer: [0, 4]
-        }, {
-          type: "fill",
-          question: `given <pre>import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
-
-public class ReadFile {
-  public static void main(String[] args) {
-    try {
-      File myObj = new File("data.txt");
-      Scanner myReader = new Scanner(myObj);
-      while (myReader.hasNextLine()) {
-        String data = myReader.nextLine();
-        ___________________;
-      }
-      myReader.close();
-    } catch (FileNotFoundException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
-    }
-  }
-}</pre>
-what should be filled in '______________' to print the whole file in console line-by-line?`,
-          answer: "System.out.println(data);"
         }, {
           type: "mc",
           question: `what is the expected output after running the main function?<br />
@@ -99,6 +96,49 @@ what should be filled in '______________' to print the whole file in console lin
             "compile error"
           ],
           answer: 0
+        }
+      ]
+    },
+    "2": {
+      title: "Basic I/O - File",
+      questions: [
+        {
+          type: "mc",
+          question: `Which of the following is the correct import statement for class <code>File</code>?`,
+          options: [
+            "import java/util/File",
+            "import java.util;",
+            "import java.util.File;",
+            "import util/File",
+            "import java.io.File;",
+            "import java/io/File",
+            "import java.util.file"
+          ],
+          answer: 4
+        }, {
+          type: "fill",
+          question: `given <pre>import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class ReadFile {
+  public static void main(String[] args) {
+    try {
+      File myObj = new File("data.txt");
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        ___________________;
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+}</pre>
+what should be filled in '______________' to print the whole file in console line-by-line?`,
+          answer: "System.out.println(data);"
         }
       ]
     }

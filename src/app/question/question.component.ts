@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { QuestionService } from './question.service';
 
@@ -7,6 +7,10 @@ import { QuestionService } from './question.service';
  * data source at:
  * https://gist.github.com/valen214/66eafdef48f4507f6509b86a86c01f8e
  */
+
+declare global {
+  const PR: any;
+}
 
 @Component({
   selector: 'app-question',
@@ -18,15 +22,15 @@ export class QuestionComponent implements OnInit {
   setNumber;
   questionNumber;
 
-  data = {};
+  data;
 
   constructor(
     private route: ActivatedRoute,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private elemRef: ElementRef
   ) { }
 
   ngOnInit() {
-    this.language = this.route.snapshot.paramMap.get("urlParam");
     this.route.paramMap.subscribe(params => {
       this.language = params.get("language")
       this.setNumber = params.get("setNumber")
@@ -34,6 +38,24 @@ export class QuestionComponent implements OnInit {
     })
 
     this.data = this.questionService.getQuestionData();
+  }
+
+  ngAfterViewChecked(){
+    let code_blocks: HTMLElement[] = this.elemRef.nativeElement.querySelectorAll("pre");
+    
+    if(code_blocks){
+      let first = true;
+      let addLineNumsAfterFirst = !this.route.snapshot.paramMap.get("questionNumber")
+      for(let pre of code_blocks){
+        let wrapper = document.createElement("div");
+        pre.parentNode.insertBefore(wrapper, pre);
+        pre.style.display = 'inline-block';
+        pre.classList.add("prettyprint", (first || addLineNumsAfterFirst) && "linenums")
+        wrapper.appendChild(pre);
+        first = false;
+      }
+      PR.prettyPrint()
+    }
   }
 
   isNumber(val){
