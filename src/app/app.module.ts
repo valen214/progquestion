@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { QuestionComponent } from './question/question.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgVarModule } from './ng-var/ng-var.module';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
 
     MatCheckboxModule,
+    NgVarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

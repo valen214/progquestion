@@ -1,7 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import data from "./question.data";
+import { QuestionService } from './question.service';
+
+/**
+ * data source at:
+ * https://gist.github.com/valen214/66eafdef48f4507f6509b86a86c01f8e
+ */
 
 @Component({
   selector: 'app-question',
@@ -13,10 +18,11 @@ export class QuestionComponent implements OnInit {
   setNumber;
   questionNumber;
 
-  data = data;
+  data = {};
 
   constructor(
     private route: ActivatedRoute,
+    private questionService: QuestionService
   ) { }
 
   ngOnInit() {
@@ -26,6 +32,8 @@ export class QuestionComponent implements OnInit {
       this.setNumber = params.get("setNumber")
       this.questionNumber = params.get("questionNumber")
     })
+
+    this.data = this.questionService.getQuestionData();
   }
 
   isNumber(val){

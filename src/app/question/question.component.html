@@ -1,61 +1,65 @@
 
-<div *ngIf="data[language] as dataLang; else showAllLang">
-  <a [routerLink]="'../'">up one layer</a><br />
-  lanuguage: {{ language }}<br />
-  <ng-container *ngIf="setNumber; else showAllSets">
-    <ng-container *ngIf="dataLang[setNumber] as dataSet; else noDataSet">
-      <span class="question-info">set number: </span>{{ setNumber }}<br />
-      set title: {{ dataSet.title }}<br />
-      <ng-container *ngIf="dataSet.questions[questionNumber] as dataQuestion; else showAllQuestions">
-        <a *ngIf="0 &lt; +questionNumber"
-            [routerLink]="['../', +questionNumber-1]">previous question</a><br />
-        <a [routerLink]="['../', +questionNumber+1]">next question</a><br />
-        question number: {{ questionNumber }}<br /><br />
-        question: <div class="question-content" [innerHTML]="dataQuestion.question"></div>
-        <ng-container [ngSwitch]="dataQuestion.type">
-          <ol *ngSwitchCase="'mc'" class="questoin-content">
-            <li *ngFor="let option of dataQuestion.options; index as i" type="a"
-                [ngClass]="{ 'correct-answer': i == dataQuestion.answer }"
-                [innerHTML]="option">
-            </li>
-          </ol>
-          <div *ngSwitchCase="'mcma'">
-            <div *ngFor="let option of dataQuestion.options; index as i">
-              <mat-checkbox>i
-              </mat-checkbox>
-              <span
-                  [ngClass]="{'correct-answer': i == dataQuestion.answer}"
-                  [innerHTML]="option"></span>
+<ng-container *ngVar="data && (data | async) || {} as data">
+  <div *ngIf="data[language] as dataLang; else showAllLang">
+    <a [routerLink]="'../'">up one layer</a><br />
+    lanuguage: {{ language }}<br />
+    <ng-container *ngIf="setNumber; else showAllSets">
+      <ng-container *ngIf="dataLang[setNumber] as dataSet; else noDataSet">
+        <span class="question-info">set number: </span>{{ setNumber }}<br />
+        set title: {{ dataSet.title }}<br />
+        <ng-container *ngIf="dataSet.questions[questionNumber] as dataQuestion; else showAllQuestions">
+          <a *ngIf="0 &lt; +questionNumber"
+              [routerLink]="['../', +questionNumber-1]">previous question</a><br />
+          <a [routerLink]="['../', +questionNumber+1]">next question</a><br />
+          question number: {{ questionNumber }}<br /><br />
+          question: <div class="question-content" [innerHTML]="dataQuestion.question"></div>
+          <ng-container [ngSwitch]="dataQuestion.type">
+            <ol *ngSwitchCase="'mc'" class="questoin-content">
+              <li *ngFor="let option of dataQuestion.options; index as i" type="a"
+                  [ngClass]="{ 'correct-answer': i == dataQuestion.answer }"
+                  [innerHTML]="option">
+              </li>
+            </ol>
+            <ng-container *ngSwitchCase="'mcma'">
+              <div *ngFor="let option of dataQuestion.options; index as i"
+                  class="mcma-option">
+                <mat-checkbox>{{ i }}.&nbsp;
+                  <span
+                      [ngClass]="{'correct-answer': dataQuestion.answer.includes(i)}"
+                      [innerHTML]="option"></span>
+                </mat-checkbox>
+              </div>
+            </ng-container>
+            <div *ngSwitchCase="'fill'">
+              fill in the blanks:<br />
+              answer: <span class="correct-answer">{{ dataQuestion.answer }}</span>
             </div>
-          </div>
-          <div *ngSwitchCase="'fill'">
-            fill in the blanks:<br />
-            answer: <span class="correct-answer">{{ dataQuestion.answer }}</span>
-          </div>
+          </ng-container>
         </ng-container>
+        <ng-template #showAllQuestions>
+          <br />
+          questions: <br /><br />
+          <a *ngFor="let q of dataSet.questions; index as i"
+              [routerLink]="['/question', language, setNumber, i]">
+            question {{ i }}: {{ q.type }}: {{ q.question }}<br /><br />
+          </a>
+        </ng-template>
       </ng-container>
-      <ng-template #showAllQuestions>
-        <br />
-        questions: <br /><br />
-        <a *ngFor="let q of dataSet.questions; index as i"
-            [routerLink]="['/question', language, setNumber, i]">
-          question {{ i }}: {{ q.type }}: {{ q.question }}<br /><br />
-        </a>
-      </ng-template>
     </ng-container>
-  </ng-container>
-  <ng-template #showAllSets>
-    <a *ngFor="let item of dataLang | keyvalue" [routerLink]="item.key">
-      problem set {{ item.key }}: {{ item.value.title }}
-    </a>
+    <ng-template #showAllSets>
+      <a *ngFor="let item of dataLang | keyvalue" [routerLink]="item.key">
+        problem set {{ item.key }}: {{ item.value.title }}
+      </a>
+    </ng-template>
+    <ng-template #noDataSet>
+      data set <ng-container *ngIf="setNumber">{{ setNumber }} </ng-container>doesn't exist
+    </ng-template>
+  </div>
+  <ng-template #showAllLang>
+    available languages:<br />
+    <ng-container *ngFor="let item of data | keyvalue">
+      <a [routerLink]="['/question', item.key]">{{ item.key }}</a><br/>
+    </ng-container>
   </ng-template>
-  <ng-template #noDataSet>
-    data set <ng-container *ngIf="setNumber">{{ setNumber }} </ng-container>doesn't exist
-  </ng-template>
-</div>
-<ng-template #showAllLang>
-  available languages:<br />
-  <ng-container *ngFor="let item of data | keyvalue">
-    <a [routerLink]="['/question', item.key]">{{ item.key }}</a><br/>
-  </ng-container>
-</ng-template>
+
+</ng-container>

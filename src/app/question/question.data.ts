@@ -1,6 +1,5 @@
 
-
-export default {
+let data = {
   "java": {
     "1": {
       title: "Basic I/O - Console",
@@ -30,7 +29,7 @@ can compile without error?`,
             "Scanner readFromConsole = new Scanner(System.in);",
             "readFromConsole = Scanner(System.in)"
           ],
-          answer: 0
+          answer: [0, 4]
         }, {
           type: "fill",
           question: `given <pre>import java.io.File;  // Import the File class
@@ -79,7 +78,27 @@ what should be filled in '______________' to print the whole file in console lin
           ],
           answer: 3
         }, {
-
+          type: "mc",
+          question: `what is the expected output of the following program?<br />
+<pre>public class Main
+{
+  public static void main(String args[]){
+    int arr[] = { 1, 2, 3 };
+    for(int i = 0; i < arr.length; ++i){
+      System.out.print(arr[i]);
+    }
+  }
+}</pre>`,
+          options: [
+            `<pre>1
+2
+3</pre>`,
+            "<pre>123</pre>",
+            `<pre>321</pre>`,
+            "<pre>1 2 3</pre>",
+            "compile error"
+          ],
+          answer: 0
         }
       ]
     }
@@ -90,4 +109,7 @@ what should be filled in '______________' to print the whole file in console lin
   "python": {
 
   }
-}
+};
+console.log(JSON.stringify(data, null, 2));
+
+export default data;
