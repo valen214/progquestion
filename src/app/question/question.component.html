@@ -1,6 +1,6 @@
 
 <ng-container *ngVar="data && (data | async) || {} as data">
-  <div *ngIf="data[language] as dataLang; else showAllLang">
+  <div class="container" *ngIf="data[language] as dataLang; else showAllLang">
     <a [routerLink]="'../'">up one layer</a><br />
     lanuguage: {{ language }}<br />
     <ng-container *ngIf="setNumber; else showAllSets">
@@ -41,7 +41,7 @@
           questions: <br /><br />
           <a *ngFor="let q of dataSet.questions; index as i"
               [routerLink]="['/question', language, setNumber, i]">
-            question {{ i }}: {{ q.type }}: {{ q.question }}<br /><br />
+            question {{ i }}: {{ q.type }}: <span [innerHTML]="q.question"></span><br /><br />
           </a>
         </ng-template>
       </ng-container>
