@@ -1,0 +1,27 @@
+
+a:visited {
+  color: #00e;
+}
+
+
+.container {
+  padding: 15px 8px 0;
+}
+
+.question-info {
+  font-family: "Consolas";
+}
+
+.question-content {
+  font-family: initial;
+}
+
+.correct-answer {
+  color: #5d5;
+}
+
+.mcma-option {
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}

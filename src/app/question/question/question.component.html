@@ -1,0 +1,29 @@
+
+<ng-container *ngIf="data">
+
+  question: <div class="question-content" [innerHTML]="data.question"></div>
+  <ng-container *ngIf="showAnswers">
+    <ng-container [ngSwitch]="data.type">
+      <ol *ngSwitchCase="'mc'" class="question-content">
+        <li *ngFor="let option of data.options; index as i" type="a"
+        [ngClass]="{ 'correct-answer': i == data.answer }"
+        [innerHTML]="option">
+        </li>
+      </ol>
+      <ng-container *ngSwitchCase="'mcma'">
+        <div *ngFor="let option of data.options; index as i"
+        class="mcma-option">
+          <mat-checkbox>{{ i }}.&nbsp;
+            <span [ngClass]="{'correct-answer': data.answer.includes(i)}"
+            [innerHTML]="option"></span>
+          </mat-checkbox>
+        </div>
+      </ng-container>
+      <div *ngSwitchCase="'fill'">
+        fill in the blanks:<br />
+        answer: <span class="correct-answer">{{ data.answer }}</span>
+      </div>
+    </ng-container>
+  </ng-container>
+
+</ng-container>

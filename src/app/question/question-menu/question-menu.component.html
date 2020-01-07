@@ -14,29 +14,8 @@
           [routerLink]="['../', +questionNumber+1]">next question</a><br />
           question number: {{ questionNumber }}<br /><br />
           question: <div class="question-content" [innerHTML]="dataQuestion.question"></div>
-          <ng-container [ngSwitch]="dataQuestion.type">
-            <ol *ngSwitchCase="'mc'" class="questoin-content">
-              <li *ngFor="let option of dataQuestion.options; index as i" type="a"
-              [ngClass]="{ 'correct-answer': i == dataQuestion.answer }"
-                  [innerHTML]="option">
-                </li>
-              </ol>
-            <ng-container *ngSwitchCase="'mcma'">
-              <div *ngFor="let option of dataQuestion.options; index as i"
-                  class="mcma-option">
-                  <mat-checkbox>{{ i }}.&nbsp;
-                    <span
-                    [ngClass]="{'correct-answer': dataQuestion.answer.includes(i)}"
-                    [innerHTML]="option"></span>
-                  </mat-checkbox>
-                </div>
-              </ng-container>
-              <div *ngSwitchCase="'fill'">
-                fill in the blanks:<br />
-                answer: <span class="correct-answer">{{ dataQuestion.answer }}</span>
-              </div>
-            </ng-container>
-          </ng-container>
+          <question-question [data]="dataQuestion"></question-question>
+        </ng-container>
         <ng-template #showAllQuestions>
           <br />
           questions: <br /><br />

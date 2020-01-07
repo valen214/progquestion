@@ -10,14 +10,13 @@ import { MatButtonModule } from '@angular/material/Button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { QuestionComponent } from './question/question.component';
 import { NgVarModule } from './ng-var/ng-var.module';
+import { QuestionModule } from './question/question.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -26,10 +25,11 @@ import { NgVarModule } from './ng-var/ng-var.module';
     HttpClientModule,
 
     MatButtonModule,
-    MatCheckboxModule,
     MatToolbarModule,
 
     NgVarModule,
+
+    QuestionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

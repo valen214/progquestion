@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { QuestionService } from './question.service';
+import { QuestionService } from '../question.service';
 
 /**
  * data source at:
@@ -13,11 +13,11 @@ declare global {
 }
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  selector: 'app-question-menu',
+  templateUrl: './question-menu.component.html',
+  styleUrls: ['./question-menu.component.scss']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionMenuComponent implements OnInit {
   language;
   setNumber;
   questionNumber;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { QuestionComponent } from './question/question.component';
+import { QuestionMenuComponent } from './question/question-menu/question-menu.component';
 
 
 const routes: Routes = [{
@@ -9,16 +9,16 @@ const routes: Routes = [{
     component: HomeComponent,
   }, {
     path: "question/:language/:setNumber/:questionNumber",
-    component: QuestionComponent
+    component: QuestionMenuComponent
   }, {
     path: "question/:language/:setNumber",
-    component: QuestionComponent
+    component: QuestionMenuComponent
   }, {
     path: "question/:language",
-    component: QuestionComponent
+    component: QuestionMenuComponent
   }, {
     path: "question",
-    component: QuestionComponent
+    component: QuestionMenuComponent
   }, {
     path: "**",
     component: HomeComponent,
